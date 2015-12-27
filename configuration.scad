@@ -1,11 +1,13 @@
-motor_end_height=44;
+motor_end_height=50;
 idler_end_height=28;
 carriage_height=24;
 platform_thickness=8;
 bed_thickness=12;
 pcb_thickness=2;
-rod_length=120;
-smooth_rod_length=300;
-tower_radius = 120;
+rod_length=200;
+smooth_rod_length=1000;
+smooth_rod_diameter=12;
+smooth_rod_distance=80;
+tower_radius = 170;
 platform_hinge_offset=33;
 carriage_hinge_offset=22;

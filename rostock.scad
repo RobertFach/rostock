@@ -21,7 +21,7 @@ belt_length=smooth_rod_length-motor_end_height/2-idler_end_height/2;
 
 module smooth_rod() 
 {
-	color(steel) cylinder(r=4, h=smooth_rod_length);
+	color(steel) cylinder(r=smooth_rod_diameter/2, h=smooth_rod_length);
 }
 
 module tower(height) 
@@ -36,8 +36,8 @@ module tower(height)
 		rotate(180)
 		if (use_stls) import ("idler_end.stl"); else idler_end();
 
-		translate([30, 0, 0]) smooth_rod();
-		translate([-30, 0, 0]) smooth_rod();
+		translate([smooth_rod_distance/2, 0, 0]) smooth_rod();
+		translate([-smooth_rod_distance/2, 0, 0]) smooth_rod();
 
 		translate([0, 0, motor_end_height+bed_thickness+pcb_thickness+8+platformxyz[2]+height]) 
 		rotate([0, 180, 0]) 
@@ -111,6 +111,8 @@ module rostock()
 	color([0.9, 0, 0]) 
 	translate([0, 0, motor_end_height+bed_thickness+pcb_thickness/2])
 	cube([tower_radius*1.4, tower_radius*1.4, pcb_thickness], center=true);
+	color("green")translate([0, 0, motor_end_height+bed_thickness+pcb_thickness/2])
+	cube([220, 220, pcb_thickness],center=true);
 }
 
 rostock();
