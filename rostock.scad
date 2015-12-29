@@ -7,9 +7,11 @@ use <idler_end.scad>;
 use <carriage.scad>;
 use <platform.scad>;
 use <rod.scad>;
+use <plywood.scad>;
 
 aluminum = [0.9, 0.9, 0.9];
 steel = [0.8, 0.8, 0.9];
+wood = [0.7, 0.7, 0.9];
 use_stls=false;
 
 //build radius for animation.
@@ -105,13 +107,16 @@ module rostock()
 	rotate([0, 0, 60]) 
 	if (use_stls) import ("platform.stl"); else platform();
 
-	% translate([0, 0, motor_end_height+bed_thickness/2])
-	cylinder(r=(tower_radius-8/2)/cos(30), h=bed_thickness, center=true, $fn=6);
+    color(wood)translate([0,-smooth_rod_diameter/2,motor_end_height])plywood();
+    color(wood)translate([0,-smooth_rod_diameter/2,smooth_rod_length+plywood_thickness/2])plywood();
+	%translate([0, 0, motor_end_height+bed_thickness/2])
+	cylinder(r=(tower_radius-smooth_rod_diameter/2)/cos(30), h=bed_thickness, center=true, $fn=6);
 
 	color([0.9, 0, 0]) 
 	translate([0, 0, motor_end_height+bed_thickness+pcb_thickness/2])
 	cube([tower_radius*1.4, tower_radius*1.4, pcb_thickness], center=true);
-	color("green")translate([0, 0, motor_end_height+bed_thickness+pcb_thickness/2])
+	color("green")
+    translate([0, 0, motor_end_height+bed_thickness+pcb_thickness/2])
 	cube([220, 220, pcb_thickness],center=true);
 }
 

@@ -1,42 +1,33 @@
-radius = 175; // pretty close to 150/cos(30)
+include <configuration.scad>
+
+radius = tower_radius-smooth_rod_diameter/2; // pretty close to 150/cos(30)
 radius2 = radius/cos(30);
 radius3 = radius2/cos(30)/2;
-offset = 150-radius;
-thickness = 9;
+offset = tower_radius-radius;
 
 module plywood() {
+  echo("ground site: ", 2*tower_radius-smooth_rod_diameter/2);  
   difference() {
-    intersection() {
-      cube([2*radius, 300, 9], center=true);
-      translate([0, offset, 0]) rotate([0, 0, 30])
-	cylinder(r=2*radius, h=20, center=true, $fn=3);
+    intersection() { //-smooth_rod_diameter/2
+      cube([2*tower_radius, tower_radius*2, plywood_thickness], center=true);
+      translate([0, smooth_rod_diameter/2, 0]) rotate([0, 0, 30])
+	cylinder(r=2*(tower_radius-smooth_rod_diameter/2), h=20, center=true, $fn=3);
     }
     for (a = [0, 120, 240]) {
-      translate([0, offset, 0]) rotate([0, 0, a]) {
-	translate([-30, radius-8, 0])
+      translate([0, smooth_rod_diameter/2, 0]) rotate([0, 0, a]) {
+	translate([-smooth_rod_distance/2, tower_radius-smooth_rod_diameter/2-sandwich_smooth_rod_mounting_screw_distance/2, 0])
 	  cylinder(r=2.2, h=20, center=true, $fn=12);
-	translate([30, radius-8, 0])
+	translate([smooth_rod_distance/2, tower_radius-smooth_rod_diameter/2-sandwich_smooth_rod_mounting_screw_distance/2, 0])
 	  cylinder(r=2.2, h=20, center=true, $fn=12);
       }
     }
   }
 }
 
-translate([0, offset, 10])
-for (a = [0, 120, 240]) rotate([0, 0, a])
-translate([0, radius3, 0]) jig();
+projection()translate([0, -smooth_rod_diameter/2, motor_end_height+bed_thickness/2 + 5]) plywood();
 
-
-translate([0, 0, thickness/2]) plywood();
-
-% translate([0, offset, 0]) cylinder(r=radius2, h=10, center=true, $fn=6);
+%translate([0, 0, motor_end_height+bed_thickness/2])
+	cylinder(r=(tower_radius-smooth_rod_diameter/2)/cos(30), h=bed_thickness, center=true, $fn=6);
 
 HEATED_BED = 8 * 25.4;
-% translate([0, 10, 10]) cube([HEATED_BED, HEATED_BED, 2], center=true);
-
-use <rod.scad>;
-% translate([-90, 20, 20]) rotate([0, 0, 60]) rod();
-% translate([-40, 20, 20]) rotate([0, 0, 60]) rod();
-
-use <platform.scad>;
-% translate([HEATED_BED/2, 10-HEATED_BED/2, 20]) rotate([0, 0, 60]) platform();
+% translate([0, 10, motor_end_height+bed_thickness/2 +10]) cube([HEATED_BED, HEATED_BED, 2], center=true);

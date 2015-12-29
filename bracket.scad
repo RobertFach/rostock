@@ -29,8 +29,8 @@ module bracket(h) {
       translate([w/2, 10, 0]) cylinder(r=6, h=h, center=true);
     }
     // Sandwich mount.
-    translate([-w/2, 12, 0]) cylinder(r=1.9, h=h+1, center=true);
-    translate([w/2, 12, 0]) cylinder(r=1.9, h=h+1, center=true);
+    translate([-w/2, sandwich_smooth_rod_mounting_screw_distance, 0]) cylinder(r=1.9, h=h+1, center=true);
+    translate([w/2, sandwich_smooth_rod_mounting_screw_distance, 0]) cylinder(r=1.9, h=h+1, center=true);
     // Smooth rod mounting slots.
     for (x = [-w/2, w/2]) {
       translate([x, 0, 0]) {
