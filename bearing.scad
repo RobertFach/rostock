@@ -20,4 +20,12 @@ module lm8uu() {
     }
 }
 
+module lm12uu() {
+    translate([0,0,25/2])
+    color(steel) render() difference() {
+        cylinder(h=25, r=21/2, center=true);
+        cylinder(h=30, r=6, center=true);
+    }
+}
+
 translate([30, 0, 0]) lm8uu(); // Linear bearing for 8mm smooth rod.

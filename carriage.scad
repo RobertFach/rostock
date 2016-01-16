@@ -39,10 +39,13 @@ module parallel_joints(reinforced) {
 module lm8uu_mount(d, h) {
   union() {
     difference() {
-      intersection() {
-        cylinder(r=11, h=h, center=true);
-        translate([0, -8, 0]) cube([19, 13, h+1], center=true);
+      union() {
+        cylinder(r=d/2+5, h=h, center=true);
+        translate([20, 0, 0]) cube([10, 10, h], center=true);
       }
+		translate([18,0,0])cube([22,1.5,h+2],center=true);
+		translate([20,0,8])rotate([90,90,0])cylinder(r=2,h=40,center=true);
+		translate([20,0,-8])rotate([90,90,0])cylinder(r=2,h=40,center=true);
       cylinder(r=d/2, h=h+1, center=true);
     }
   }
@@ -67,23 +70,23 @@ module belt_mount() {
 module carriage() {
   translate([0, 0, height/2]) 
   union() {
-    for (x = [-30, 30]) {
-      translate([x, 0, 0]) lm8uu_mount(d=15, h=24);
-    }
+	 translate([smooth_rod_distance/2, 0, 3]) lm8uu_mount(d=21, h=30);
+	 translate([-smooth_rod_distance/2, 0, 3])rotate([0,0,180])lm8uu_mount(d=21, h=30);
+    translate([-smooth_rod_distance/2, 0, 30+3])rotate([0,0,180])lm8uu_mount(d=21, h=30);
     belt_mount();
     difference() {
       union() {
         translate([0, -5.6, 0])
-          cube([50, 5, height], center=true);
+          cube([80, 5, height], center=true);
         translate([0, -carriage_hinge_offset, -height/2+4])
           parallel_joints(16);
       }
       // Screw hole for adjustable top endstop.
       translate([15, -16, -height/2+4])
         cylinder(r=1.5, h=20, center=true, $fn=12);
-      for (x = [-30, 30]) {
+      for (x = [-smooth_rod_distance/2, smooth_rod_distance/2]) {
         translate([x, 0, 0])
-          cylinder(r=8, h=height+1, center=true);
+          cylinder(r=21/2, h=height+1, center=true);
         // Zip tie tunnels.
         for (z = [-height/2+4, height/2-4])
           translate([x, 0, z])
@@ -94,6 +97,9 @@ module carriage() {
 }
 
 carriage();
+%for (x = [-smooth_rod_distance/2, smooth_rod_distance/2])
+      translate([x, 0, 3]) cylinder(r=21/2,h=150,center=true);
+
 
 // Uncomment the following lines to check endstop alignment.
 // use <idler_end.scad>;

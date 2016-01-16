@@ -45,9 +45,11 @@ module tower(height)
 		rotate([0, 180, 0]) 
 		{
 			if (use_stls) import ("carriage.stl"); else render() carriage();
-			for(j=[-30,30])
+			for(j=[-smooth_rod_distance/2, smooth_rod_distance/2])
 			translate([j,0,0])
-			lm8uu();
+			lm12uu(d=21, h=30);
+         translate([-smooth_rod_distance/2,0,30])
+			lm12uu(d=21, h=30);
 		}
 
 		translate([0, 17-10, motor_end_height/2]) nema17(47);
