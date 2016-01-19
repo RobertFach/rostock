@@ -15,7 +15,7 @@ wood = [0.7, 0.7, 0.9];
 use_stls=false;
 
 //build radius for animation.
-br=50;
+br=150;
 
 platformxyz=[cos($t*360)*br,sin($t*360)*br,30];
 
@@ -106,8 +106,10 @@ module rostock()
 
 	translate(platformxyz) 
 	translate([0, 0, motor_end_height+bed_thickness+pcb_thickness]) 
-	rotate([0, 0, 60]) 
-	if (use_stls) import ("platform.stl"); else platform();
+	rotate([0, 0, 60]) {
+	  if (use_stls) import ("platform.stl"); else platform();
+      rotate([0,180,30])translate([0,0,-64])import("diamond-rmax4.stl", convexity=3);
+  }
 
     color(wood)translate([0,-smooth_rod_diameter/2,motor_end_height])plywood();
     color(wood)translate([0,-smooth_rod_diameter/2,smooth_rod_length+plywood_thickness/2])plywood();
