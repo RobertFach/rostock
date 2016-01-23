@@ -59,4 +59,5 @@ module printable_rod(l)
 }
 
 rod(l=l);
+//translate([0,20,0])rotate([0,90,0])cylinder(r=2,h=l);
 //printable_rod(l=l);

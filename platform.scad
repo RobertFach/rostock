@@ -12,7 +12,7 @@ module platform() {
     union() {
       for (a = [0:120:359]) {
         rotate([0, 0, a]) {
-          translate([0, -platform_hinge_offset, 0]) parallel_joints();
+          translate([0, -platform_hinge_offset, 0]) parallel_joints1();
           // Close little triangle holes.
           translate([0, 31, 0]) cylinder(r=5, h=h, center=true);
           // Holder for adjustable bottom endstops.
